@@ -1,6 +1,6 @@
 package domain;
 
-public class Rechthoek {
+public class Rechthoek extends Vorm {
     private int breedte;
     private int hoogte;
     private Punt linkerBovenhoek;
@@ -54,5 +54,14 @@ public class Rechthoek {
 
     public String toString() {
         return this.getClass().getSimpleName() + ": linkerbovenhoek: " + this.linkerBovenhoek.toString() + " - breedte: " + this.breedte + " - hoogte: " + this.hoogte;
+    }
+
+    public String getOmhullende(Omhullende omhullende) {
+        if (omhullende.getLinkerBovenhoek() != this.getLinkerBovenhoek() ||
+                omhullende.getBreedte() != this.getBreedte() ||
+                omhullende.getHoogte() != this.getHoogte()) {
+            throw new DomainException("De rechthoek is niet gelijk aan de omhullende rechthoek.");
+        }
+        return omhullende.toString() + "\n" + this.toString();
     }
 }

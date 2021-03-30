@@ -1,6 +1,6 @@
 package domain;
 
-public class Cirkel {
+public class Cirkel extends Vorm {
     private Punt middelpunt;
     private int radius;
 
@@ -39,7 +39,7 @@ public class Cirkel {
     }
 
     public String toString() {
-        return ("Cirkel met middelpunt " + middelpunt.getX() + ", " + middelpunt.getY() + " en straal " + getRadius());
+        return ("Cirkel met middelpunt (" + middelpunt.getX() + "," + middelpunt.getY() + ") en straal " + getRadius());
     }
 
 
