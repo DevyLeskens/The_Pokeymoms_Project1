@@ -1,8 +1,6 @@
 package ui;
 
-import domain.Punt;
-import domain.Driehoek;
-import domain.DomainException;
+import domain.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,25 +8,61 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class DriehoekApp {
-    private Label invoerXHoek1Label;
-    private Label invoerXHoek2Label;
-    private Label invoerXHoek3Label;
-    private Label invoerYHoek1Label;
-    private Label invoerYHoek2Label;
-    private Label invoerYHoek3Label;
-
-    private TextField invoerXHoek1Veld;
-    private TextField invoerXHoek2Veld;
-    private TextField invoerXHoek3Veld;
-    private TextField invoerYHoek1Veld;
-    private TextField invoerYHoek2Veld;
-    private TextField invoerYHoek3Veld;
-
-    private Driehoek driehoek;
+    private Label invoerXHoek1Label, invoerXHoek2Label, invoerXHoek3Label, invoerYHoek1Label, invoerYHoek2Label, invoerYHoek3Label;
+    private TextField invoerXHoek1Veld, invoerXHoek2Veld, invoerXHoek3Veld, invoerYHoek1Veld, invoerYHoek2Veld, invoerYHoek3Veld;
 
     private Alert foutenboodschap = new Alert(Alert.AlertType.WARNING);
 
+    private Vorm vorm;
+
     public DriehoekApp(GridPane root) {
+        init(root, 0);
+        invoerYHoek3Veld.setOnAction(eventJuisteInvoerDriehoek -> {
+            try {
+                Punt punt1 = new Punt(Integer.parseInt(invoerXHoek1Veld.getText()), Integer.parseInt(invoerYHoek1Veld.getText()));
+                Punt punt2 = new Punt(Integer.parseInt(invoerXHoek2Veld.getText()), Integer.parseInt(invoerYHoek2Veld.getText()));
+                Punt punt3 = new Punt(Integer.parseInt(invoerXHoek3Veld.getText()), Integer.parseInt(invoerYHoek3Veld.getText()));
+
+                vorm = new Driehoek(punt1, punt2, punt3);
+                root.getChildren().clear();
+
+                Text uitvoer = new Text();
+                uitvoer.setText(vorm.toString());
+                root.add(uitvoer, 0, 1);
+
+            } catch (DomainException e) {
+                cleanUp(root);
+
+                foutenboodschap.setTitle("Warning");
+                foutenboodschap.setContentText(e.getMessage());
+                foutenboodschap.showAndWait();
+            }
+        });
+    }
+
+    public DriehoekApp(GridPane root, Tekening tekening) {
+        init(root, 1);
+        invoerYHoek3Veld.setOnAction(eventIngaveYHoek -> {
+            try {
+                Punt punt1 = new Punt(Integer.parseInt(invoerXHoek1Veld.getText()), Integer.parseInt(invoerYHoek1Veld.getText()));
+                Punt punt2 = new Punt(Integer.parseInt(invoerXHoek2Veld.getText()), Integer.parseInt(invoerYHoek2Veld.getText()));
+                Punt punt3 = new Punt(Integer.parseInt(invoerXHoek3Veld.getText()), Integer.parseInt(invoerYHoek3Veld.getText()));
+                vorm = new Driehoek(punt1, punt2, punt3);
+                tekening.voegToe(vorm);
+                cleanUp(root);
+
+            } catch (DomainException e) {
+                cleanUp(root);
+                foutenboodschap.setTitle("Warning");
+                foutenboodschap.setHeaderText(null);
+                foutenboodschap.setContentText(e.getMessage());
+                foutenboodschap.showAndWait();
+            }
+
+        });
+    }
+
+    private void init(GridPane root, int teller) {
         invoerXHoek1Label = new Label("Geef het x-coordinaat van Hoekpunt 1 van de driehoek");
         invoerXHoek1Veld = new TextField();
         invoerYHoek1Label = new Label("Geef het y-coordinaat van Hoekpunt 1 van de driehoek");
@@ -54,33 +88,21 @@ public class DriehoekApp {
         root.add(invoerXHoek3Veld, 1, 4);
         root.add(invoerYHoek3Label, 0, 5);
         root.add(invoerYHoek3Veld, 1, 5);
+    }
 
+    private void cleanUp(GridPane root) {
+        root.getChildren().remove(invoerXHoek1Label);
+        root.getChildren().remove(invoerXHoek1Veld);
+        root.getChildren().remove(invoerXHoek2Label);
+        root.getChildren().remove(invoerXHoek2Veld);
+        root.getChildren().remove(invoerXHoek3Label);
+        root.getChildren().remove(invoerXHoek3Veld);
+        root.getChildren().remove(invoerYHoek1Label);
+        root.getChildren().remove(invoerYHoek1Veld);
+        root.getChildren().remove(invoerYHoek2Label);
+        root.getChildren().remove(invoerYHoek2Veld);
+        root.getChildren().remove(invoerYHoek3Label);
+        root.getChildren().remove(invoerYHoek3Veld);
 
-        invoerYHoek3Veld.setOnAction(eventJuisteInvoerDriehoek -> {
-            try {
-                Punt punt1 = new Punt(Integer.parseInt(invoerXHoek1Veld.getText()), Integer.parseInt(invoerYHoek1Veld.getText()));
-                Punt punt2 = new Punt(Integer.parseInt(invoerXHoek2Veld.getText()), Integer.parseInt(invoerYHoek2Veld.getText()));
-                Punt punt3 = new Punt(Integer.parseInt(invoerXHoek3Veld.getText()), Integer.parseInt(invoerYHoek3Veld.getText()));
-
-                Driehoek driehoek = new Driehoek(punt1, punt2, punt3);
-                root.getChildren().clear();
-
-                Text uitvoer = new Text();
-                uitvoer.setText(driehoek.toString());
-                root.add(uitvoer, 0, 1);
-
-            } catch (DomainException e) {
-                invoerXHoek1Veld.clear();
-                invoerYHoek1Veld.clear();
-                invoerXHoek2Veld.clear();
-                invoerYHoek2Veld.clear();
-                invoerXHoek3Veld.clear();
-                invoerYHoek3Veld.clear();
-
-                foutenboodschap.setTitle("Warning");
-                foutenboodschap.setContentText(e.getMessage());
-                foutenboodschap.showAndWait();
-            }
-        });
     }
 }

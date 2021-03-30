@@ -11,6 +11,7 @@ public class RechthoekTest {
     private Punt linkerBovenhoek;
     private int breedte, hoogte;
     private Rechthoek rechthoek;
+    private Omhullende omhullende;
 
     @Before
     public void setUp() {
@@ -84,10 +85,11 @@ public class RechthoekTest {
         assertFalse(rechthoek.equals(null));
     }
 
-    @Test
-    public void getOmhullende_moet_True_geven_als_het_de_verwachte_output_is() {
+    @Test (expected = DomainException.class)
+    public void getOmhullende_gooit_exception_als_het_de_foute_output_is() {
         Rechthoek rechthoek = new Rechthoek(linkerBovenhoek, breedte, hoogte);
-        Omhullende omhullende = new Omhullende(linkerBovenhoek, breedte, hoogte);
-        assertEquals(rechthoek.getOmhullende(omhullende), omhullende.getOmhullende(rechthoek));
+        Omhullende omhullende = new Omhullende(new Punt(100,100), 15, 20);
+        assertEquals(rechthoek.getOmhullende(), omhullende);
+
     }
 }

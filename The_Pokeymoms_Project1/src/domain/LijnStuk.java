@@ -1,10 +1,22 @@
 package domain;
 
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+
+
 public class LijnStuk extends Vorm {
     private Punt startPunt;
     private Punt eindPunt;
+    private Punt linksbovenhoek;
 
     public LijnStuk(Punt vStart, Punt vEind) {
+        super(Color.rgb(0, 0, 0));
+        setStartEnEindPunt(vStart, vEind);
+    }
+
+    public LijnStuk(Color kleur, Punt vStart, Punt vEind){
+        super(kleur);
         setStartEnEindPunt(vStart, vEind);
     }
 
@@ -41,4 +53,25 @@ public class LijnStuk extends Vorm {
     public String toString() {
         return "Lijn: startpunt: " + startPunt.toString() + " - eindpunt: " + eindPunt.toString();
     }
+
+    @Override
+    public Omhullende getOmhullende(){
+        int breedte = eindPunt.getX() - startPunt.getX();
+        int hoogte = eindPunt.getY() - startPunt.getY();
+        if(startPunt.getY() < eindPunt.getY()) {
+            linksbovenhoek = startPunt;
+        } else {
+            linksbovenhoek = new Punt(startPunt.getX(), startPunt.getY() - hoogte);
+        }
+        Omhullende omhullende = new Omhullende(linksbovenhoek, breedte, hoogte);
+
+        return omhullende;
+    }
+    @Override
+    public void teken(Pane root){
+        Line lijn = new Line(getStartPunt().getX(), getStartPunt().getY(), getEindPunt().getX(), getEindPunt().getY());
+        lijn.setStrokeWidth(5);
+        root.getChildren().add(lijn);
+    }
+
 }

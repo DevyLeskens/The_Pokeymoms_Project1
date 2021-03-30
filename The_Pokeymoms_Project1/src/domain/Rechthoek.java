@@ -1,11 +1,16 @@
 package domain;
 
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+
 public class Rechthoek extends Vorm {
     private int breedte;
     private int hoogte;
     private Punt linkerBovenhoek;
 
     public Rechthoek(Punt linkerBovenhoek, int vBreedte, int vHoogte) {
+        super(Color.rgb(0, 0, 0));
         setBreedte(vBreedte);
         setHoogte(vHoogte);
         setLinkerBovenhoek(linkerBovenhoek);
@@ -52,16 +57,27 @@ public class Rechthoek extends Vorm {
                 && this.breedte == (((Rechthoek) rechthoek).getBreedte());
     }
 
+    @Override
     public String toString() {
         return this.getClass().getSimpleName() + ": linkerbovenhoek: " + this.linkerBovenhoek.toString() + " - breedte: " + this.breedte + " - hoogte: " + this.hoogte;
     }
 
-    public String getOmhullende(Omhullende omhullende) {
-        if (omhullende.getLinkerBovenhoek() != this.getLinkerBovenhoek() ||
-                omhullende.getBreedte() != this.getBreedte() ||
-                omhullende.getHoogte() != this.getHoogte()) {
+    @Override
+    public Omhullende getOmhullende() {
+        if (getLinkerBovenhoek() != this.getLinkerBovenhoek() ||
+                getBreedte() != this.getBreedte() ||
+                getHoogte() != this.getHoogte()) {
             throw new DomainException("De rechthoek is niet gelijk aan de omhullende rechthoek.");
         }
-        return omhullende.toString() + "\n" + this.toString();
+        Omhullende omhullende = new Omhullende(linkerBovenhoek, breedte, hoogte);
+        return omhullende;
+    }
+
+    @Override
+    public void teken(Pane root) {
+        Rectangle recht = new Rectangle(getLinkerBovenhoek().getX(), getLinkerBovenhoek().getY(), getBreedte(), getHoogte());
+        recht.setFill(getKleur());
+        recht.setStroke(Color.BLACK);
+        root.getChildren().add(recht);
     }
 }

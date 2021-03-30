@@ -1,11 +1,32 @@
 package domain;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Driehoek extends Vorm {
     Punt hoekPunt1;
     Punt hoekPunt2;
     Punt hoekPunt3;
+    private Punt linkerbovenhoek;
 
     public Driehoek(Punt punt1, Punt punt2, Punt punt3) {
+        super(Color.rgb(0, 0, 0));
+        if (punt1 == punt2 || punt2 == punt3 || punt1 == punt3) {
+            throw new DomainException("punten mogen niet samenvallen");
+        }
+        if (liggenOp1Lijn(punt1, punt2, punt3)) {
+            throw new DomainException("punten mogen niet op een lijn liggen");
+        }
+        setHoekPunt1(punt1);
+        setHoekPunt2(punt2);
+        setHoekPunt3(punt3);
+    }
+
+    public Driehoek(Color kleur, Punt punt1, Punt punt2, Punt punt3){
+        super(kleur);
         if (punt1 == punt2 || punt2 == punt3 || punt1 == punt3) {
             throw new DomainException("punten mogen niet samenvallen");
         }
@@ -91,5 +112,38 @@ public class Driehoek extends Vorm {
 
     public String toString() {
         return ("Driehoek: hoekpunt1: " + this.getHoekPunt1() + " - hoekpunt2: " + this.getHoekPunt2() + " - hoekpunt3: " + this.getHoekPunt3());
+    }
+
+    @Override
+    public Omhullende getOmhullende() {
+        ArrayList<Integer> xWaarden = new ArrayList<Integer>();
+        ArrayList<Integer> yWaarden = new ArrayList<Integer>();
+        xWaarden.add(hoekPunt1.getX());
+        xWaarden.add(hoekPunt2.getX());
+        xWaarden.add(hoekPunt3.getX());
+        yWaarden.add(hoekPunt1.getY());
+        yWaarden.add(hoekPunt2.getY());
+        yWaarden.add(hoekPunt3.getY());
+        int minX = Collections.min(xWaarden);
+        int minY = Collections.min(yWaarden);
+        int maxX = Collections.max(xWaarden);
+        int maxY = Collections.max(yWaarden);
+
+        linkerbovenhoek = new Punt(minX, minY);
+        int breedte = maxX - minX;
+        int hoogte = maxY - minY;
+
+        Omhullende omhullende = new Omhullende(linkerbovenhoek, breedte, hoogte);
+
+        return omhullende;
+    }
+
+    @Override
+    public void teken(Pane root) {
+        Polyline drie = new Polyline();
+        drie.setFill(getKleur());
+        drie.setStroke(Color.BLACK);
+        drie.getPoints().addAll(new Double[]{(double) getHoekPunt1().getX(), (double) getHoekPunt1().getY(), (double) getHoekPunt2().getX(), (double) getHoekPunt2().getY(), (double) getHoekPunt3().getX(), (double) getHoekPunt3().getY()});
+        root.getChildren().add(drie);
     }
 }

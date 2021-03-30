@@ -53,5 +53,12 @@ public class LijnStukTest {
 
         assertTrue(lijnStuk.equals(lijnStuk1));
     }
+
+    @Test (expected = DomainException.class)
+    public void getOmhullende_gooit_exception_als_het_de_foute_output_is() {
+        LijnStuk lijnstuk = new LijnStuk(punt1, punt2);
+        Omhullende omhullende = new Omhullende(new Punt(100,100), 15, 20);
+        assertEquals(lijnstuk.getOmhullende(), omhullende);
+    }
 }
 	

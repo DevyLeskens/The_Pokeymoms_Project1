@@ -66,4 +66,11 @@ public class DriehoekTest {
         assertFalse(drieHoek.equals(null));
     }
 
+    @Test(expected = DomainException.class)
+    public void getOmhullende_gooit_exception_als_het_de_foute_output_is() {
+        Driehoek driehoek = new Driehoek(punt1, punt2, punt3);
+        Omhullende omhullende = new Omhullende(new Punt(100, 100), 15, 20);
+        assertEquals(driehoek.getOmhullende(), omhullende);
+    }
+
 }

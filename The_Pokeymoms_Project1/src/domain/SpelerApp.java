@@ -15,7 +15,7 @@ public class SpelerApp {
 
     public SpelerApp(GridPane root) {
 
-        invoerNaamLabel = new Label("Geef de naam van de speler   ");
+        invoerNaamLabel = new Label("Geef de naam van de speler");
         invoerNaamVeld = new TextField();
 
         root.add(invoerNaamLabel, 0, 0);

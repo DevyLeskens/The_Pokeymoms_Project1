@@ -56,17 +56,6 @@ public class Omhullende {
         return  this.getClass().getSimpleName() + ": (" + linkerbovenhoek.getX() + ", " + linkerbovenhoek.getY() + ") - " + breedte + " - " + hoogte;
     }
 
-    public String getOmhullende(Rechthoek rechthoek) {
-        if (rechthoek.getLinkerBovenhoek() != this.getLinkerBovenhoek() ||
-                rechthoek.getBreedte() != this.getBreedte() ||
-                rechthoek.getHoogte() != this.getHoogte()) {
-            throw new DomainException("De rechthoek is niet gelijk aan de omhullende rechthoek.");
-        }
-        return rechthoek.toString() + "\n" + this.toString();
-    }
-
-
-
     public int getMinimumX() {
         return linkerbovenhoek.getX();
     }
