@@ -42,13 +42,19 @@ public class Cirkel extends Vorm {
         return this.radius;
     }
 
+    @Override
     public boolean equals(Object cirkel) {
+        if(!(cirkel instanceof Cirkel)){
+            return false;
+        }
+
         if (cirkel == null) {
             return false;
         }
         return ((Cirkel) cirkel).getRadius() == this.radius && ((Cirkel) cirkel).getMiddelpunt() == this.middelpunt;
     }
 
+    @Override
     public String toString() {
         return ("Cirkel met middelpunt (" + middelpunt.getX() + "," + middelpunt.getY() + ") en straal " + getRadius());
     }

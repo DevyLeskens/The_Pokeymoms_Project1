@@ -43,6 +43,10 @@ public class LijnStuk extends Vorm {
     }
 
     public boolean equals(Object lijnstuk) {
+        if(!(lijnstuk instanceof LijnStuk)){
+            return false;
+        }
+
         if (lijnstuk == null) {
             return false;
         }

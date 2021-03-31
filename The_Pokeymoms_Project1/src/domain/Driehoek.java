@@ -96,20 +96,24 @@ public class Driehoek extends Vorm {
         this.hoekPunt3 = hoekPunt;
     }
 
+    @Override
     public boolean equals(Object driehoek) {
         if (driehoek == null) {
             return false;
         }
-        if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt1()) {
-            if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt2()) {
-                if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt3()) {
-                    return true;
+        if (driehoek instanceof Driehoek) {
+            if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt1()) {
+                if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt2()) {
+                    if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt3()) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
     }
 
+    @Override
     public String toString() {
         return ("Driehoek: hoekpunt1: " + this.getHoekPunt1() + " - hoekpunt2: " + this.getHoekPunt2() + " - hoekpunt3: " + this.getHoekPunt3());
     }

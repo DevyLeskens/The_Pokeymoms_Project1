@@ -50,6 +50,10 @@ public class Rechthoek extends Vorm {
     }
 
     public boolean equals(Object rechthoek) {
+        if(!(rechthoek instanceof Rechthoek)){
+            return false;
+        }
+
         if (rechthoek == null) {
             return false;
         }
