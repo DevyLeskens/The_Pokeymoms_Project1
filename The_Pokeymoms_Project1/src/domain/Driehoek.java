@@ -1,20 +1,25 @@
 package domain;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-public class Driehoek extends Vorm {
+public class Driehoek extends Vorm implements Drawable{
     Punt hoekPunt1;
     Punt hoekPunt2;
     Punt hoekPunt3;
-    private Punt linkerbovenhoek;
 
     public Driehoek(Punt punt1, Punt punt2, Punt punt3) {
         super(Color.rgb(0, 0, 0));
-        if (punt1 == punt2 || punt2 == punt3 || punt1 == punt3) {
+        if (punt1 == null || punt2 == null || punt3 == null) {
+            throw new DomainException("Mag niet leeg zijn");
+        }
+        if (punt1.equals(punt2) || punt2.equals(punt3) || punt1.equals(punt3)) {
             throw new DomainException("punten mogen niet samenvallen");
         }
         if (liggenOp1Lijn(punt1, punt2, punt3)) {
@@ -25,9 +30,12 @@ public class Driehoek extends Vorm {
         setHoekPunt3(punt3);
     }
 
-    public Driehoek(Color kleur, Punt punt1, Punt punt2, Punt punt3){
+    public Driehoek(Color kleur, Punt punt1, Punt punt2, Punt punt3) {
         super(kleur);
-        if (punt1 == punt2 || punt2 == punt3 || punt1 == punt3) {
+        if (punt1 == null || punt2 == null || punt3 == null) {
+            throw new DomainException("Mag niet leeg zijn");
+        }
+        if (punt1.equals(punt2) || punt2.equals(punt3) || punt1.equals(punt3)) {
             throw new DomainException("punten mogen niet samenvallen");
         }
         if (liggenOp1Lijn(punt1, punt2, punt3)) {
@@ -104,9 +112,7 @@ public class Driehoek extends Vorm {
         if (driehoek instanceof Driehoek) {
             if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt1() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt1()) {
                 if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt2() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt2()) {
-                    if (this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt3()) {
-                        return true;
-                    }
+                    return this.getHoekPunt1() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt2() == ((Driehoek) driehoek).getHoekPunt3() || this.getHoekPunt3() == ((Driehoek) driehoek).getHoekPunt3();
                 }
             }
         }
@@ -120,27 +126,13 @@ public class Driehoek extends Vorm {
 
     @Override
     public Omhullende getOmhullende() {
-        ArrayList<Integer> xWaarden = new ArrayList<Integer>();
-        ArrayList<Integer> yWaarden = new ArrayList<Integer>();
-        xWaarden.add(hoekPunt1.getX());
-        xWaarden.add(hoekPunt2.getX());
-        xWaarden.add(hoekPunt3.getX());
-        yWaarden.add(hoekPunt1.getY());
-        yWaarden.add(hoekPunt2.getY());
-        yWaarden.add(hoekPunt3.getY());
-        int minX = Collections.min(xWaarden);
-        int minY = Collections.min(yWaarden);
-        int maxX = Collections.max(xWaarden);
-        int maxY = Collections.max(yWaarden);
-
-        linkerbovenhoek = new Punt(minX, minY);
-        int breedte = maxX - minX;
-        int hoogte = maxY - minY;
-
-        Omhullende omhullende = new Omhullende(linkerbovenhoek, breedte, hoogte);
-
-        return omhullende;
+        List<Integer> xVal = Arrays.asList(hoekPunt1.getX(), hoekPunt2.getX(), hoekPunt3.getX());
+        List<Integer> yVal = Arrays.asList(hoekPunt1.getY(), hoekPunt2.getY(), hoekPunt3.getY());
+        int b = Collections.max(xVal) - Collections.min(xVal);
+        int h = Collections.max(yVal) - Collections.min(yVal);
+        return new Omhullende(new Punt(Collections.min(xVal), Collections.min(yVal)), b, h);
     }
+
 
     @Override
     public void teken(Pane root) {

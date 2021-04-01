@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
-public class Rechthoek extends Vorm {
+public class Rechthoek extends Vorm implements Drawable{
     private int breedte;
     private int hoogte;
     private Punt linkerBovenhoek;
@@ -73,8 +73,7 @@ public class Rechthoek extends Vorm {
                 getHoogte() != this.getHoogte()) {
             throw new DomainException("De rechthoek is niet gelijk aan de omhullende rechthoek.");
         }
-        Omhullende omhullende = new Omhullende(linkerBovenhoek, breedte, hoogte);
-        return omhullende;
+        return new Omhullende(linkerBovenhoek, breedte, hoogte);
     }
 
     @Override

@@ -1,4 +1,4 @@
-/*
+
 package domain;
 
 import static org.junit.Assert.assertEquals;
@@ -86,4 +86,4 @@ public class HintLetterTest {
 
         assertEquals('x', letter.getLetter());
     }
-}*/
+}

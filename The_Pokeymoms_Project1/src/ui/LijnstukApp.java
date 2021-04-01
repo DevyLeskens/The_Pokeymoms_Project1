@@ -101,10 +101,8 @@ public class LijnstukApp {
         invoerYEindPuntLabel = new Label("Geef de hoogte van de rechthoek          ");
         invoerYEindPuntVeld = new TextField();
 
-        root.add(invoerXStartPuntLabel, 0, teller);
-        root.add(invoerXStartPuntVeld, 1, teller);
 
-        invoerXStartPuntVeld.setOnAction(eventIngaveX -> {
+        invoerXStartPuntVeld.setOnAction(eventIngaveStartX -> {
             try {
                 Integer.parseInt(invoerXStartPuntVeld.getText());
                 root.add(invoerYStartPuntLabel, 0, teller + 1);
@@ -118,10 +116,26 @@ public class LijnstukApp {
 
         });
 
-        invoerYStartPuntVeld.setOnAction(eventIngaveY -> {
+        invoerYStartPuntVeld.setOnAction(eventIngaveStartY -> {
             try {
                 Integer.parseInt(invoerYStartPuntVeld.getText());
             } catch (DomainException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        invoerXEindPuntVeld.setOnAction(eventIngaveEindX -> {
+            try {
+                Integer.parseInt(invoerXEindPuntVeld.getText());
+            } catch (DomainException e){
+                System.out.println(e.getMessage());
+            }
+        });
+
+        invoerYEindPuntVeld.setOnAction(eventIngaveEindY -> {
+            try {
+                Integer.parseInt(invoerYEindPuntVeld.getText());
+            } catch (DomainException e){
                 System.out.println(e.getMessage());
             }
         });

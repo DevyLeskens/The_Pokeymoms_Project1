@@ -4,14 +4,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
-public class Cirkel extends Vorm {
+public class Cirkel extends Vorm implements Drawable{
     private Punt middelpunt;
     private int radius;
-    private Punt linkerbovenhoek;
 
     public Cirkel(Punt punt, int radius){
         super(Color.rgb(0, 0, 0));
         setMiddelPunt(punt);
+        setRadius(radius);
     }
 
     public Cirkel(Color kleur, Punt punt, int radius) {
@@ -61,8 +61,7 @@ public class Cirkel extends Vorm {
 
     @Override
     public Omhullende getOmhullende() {
-        Omhullende hul = new Omhullende(new Punt(getMiddelpunt().getX()-radius,getMiddelpunt().getY()+radius), radius*2, radius*2);
-        return hul;
+        return new Omhullende(new Punt((this.getMiddelpunt().getX()-this.getRadius()),(this.getMiddelpunt().getY()-this.getRadius())),this.getRadius()*2,this.getRadius()*2);
     }
 
     @Override

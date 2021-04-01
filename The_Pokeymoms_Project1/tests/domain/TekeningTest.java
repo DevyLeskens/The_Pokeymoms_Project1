@@ -190,4 +190,31 @@ public class TekeningTest {
         return huisMetSchouwZonderDeur;
     }
 
+    @Test(expected = DomainException.class)
+    public void vorm_te_ver_naar_links() {
+        Tekening tekening = new Tekening("Mooie Tekening");
+        Vorm vorm = new Rechthoek(new Punt(-10,20),20, 10);
+        tekening.voegToe(vorm);
+    }
+
+    @Test(expected = DomainException.class)
+    public void vorm_te_ver_naar_onder() {
+        Tekening tekening = new Tekening("Mooie Tekening");
+        Vorm vorm = new Rechthoek(new Punt(30,200),20, 200);
+        tekening.voegToe(vorm);
+    }
+
+    @Test(expected = DomainException.class)
+    public void Vorm_te_ver_naar_rechts(){
+    Tekening tekening = new Tekening("Mooie Tekening");
+    Vorm vorm = new Rechthoek(new Punt(300, 10), 120, 10);
+    tekening.voegToe(vorm);
+    }
+
+    @Test(expected = DomainException.class)
+    public void vorm_te_ver_naar_boven() {
+        Tekening tekening = new Tekening("Mooie Tekening");
+        Vorm vorm = new Rechthoek(new Punt(5,-10),20, 20);
+        tekening.voegToe(vorm);
+    }
 }

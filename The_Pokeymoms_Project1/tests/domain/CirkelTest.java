@@ -10,12 +10,15 @@ public class CirkelTest {
     private Punt middelpunt;
     private int radius;
     private Cirkel cirkel;
+    private Omhullende omhullende, omhullende2;
 
     @Before
     public void setUp() throws Exception {
         middelpunt = new Punt(5, 10);
         radius = 5;
         cirkel = new Cirkel(middelpunt, radius);
+        omhullende = new Omhullende(new Punt(100, 40), 15, 20);
+        omhullende2 = new Omhullende(new Punt(middelpunt.getX() - radius,middelpunt.getY() - radius),radius*2,radius*2);
     }
 //    ik kan een cirkel aanmaken met een geldig middelpunt en een
 //    geldige straal
@@ -80,10 +83,17 @@ public class CirkelTest {
         assert (!cirkel.equals(new Cirkel(middelpunt, 2)));
     }
 
-    @Test(expected = DomainException.class)
-    public void getOmhullende_gooit_exception_als_het_de_foute_output_is() {
-        Cirkel cirkel = new Cirkel(middelpunt, radius);
-        Omhullende omhullende = new Omhullende(new Punt(100, 100), 15, 20);
-        assertEquals(cirkel.getOmhullende(), omhullende);
+    @Test
+    public void getOmhullende_geeft_false_als_het_de_foute_output_geeft(){
+        assertNotEquals(cirkel.getOmhullende(), omhullende);
     }
+
+    @Test
+    public void getOmhullende_geeft_true_als_het_de_juiste_output_geeft(){
+        assertEquals(cirkel.getOmhullende().getLinkerBovenhoek(), omhullende2.getLinkerBovenhoek());
+        assertEquals(cirkel.getOmhullende().getBreedte(), omhullende2.getBreedte());
+        assertEquals(cirkel.getOmhullende().getHoogte(), omhullende2.getHoogte());
+    }
+
+
 }

@@ -5,7 +5,7 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
 
-public class LijnStuk extends Vorm {
+public class LijnStuk extends Vorm implements Drawable{
     private Punt startPunt;
     private Punt eindPunt;
     private Punt linksbovenhoek;
@@ -67,9 +67,7 @@ public class LijnStuk extends Vorm {
         } else {
             linksbovenhoek = new Punt(startPunt.getX(), startPunt.getY() - hoogte);
         }
-        Omhullende omhullende = new Omhullende(linksbovenhoek, breedte, hoogte);
-
-        return omhullende;
+        return new Omhullende(linksbovenhoek, breedte, hoogte);
     }
     @Override
     public void teken(Pane root){

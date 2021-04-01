@@ -19,6 +19,20 @@ public class Tekening implements Drawable {
         if (bevat(vorm)) {
             throw new DomainException("Vorm bestaat al in de lijst met vormen.");
         }
+
+        if(vorm.getOmhullende().getLinkerBovenhoek().getX() < MIN_X){
+            throw new DomainException("vorm te ver naar links");
+        }
+        if(vorm.getOmhullende().getLinkerBovenhoek().getY() < MIN_Y){
+            throw new DomainException("vorm te ver naar boven");
+        }
+        if(vorm.getOmhullende().getLinkerBovenhoek().getX() + vorm.getOmhullende().getBreedte() > MAX_X){
+            throw new DomainException("vorm te ver naar rechts");
+        }
+        if(vorm.getOmhullende().getLinkerBovenhoek().getY() +  vorm.getOmhullende().getHoogte() > MAX_Y){
+            throw new DomainException("vorm te ver naar beneden");
+        }
+
         vormen.add(vorm);
     }
 
@@ -78,14 +92,19 @@ public class Tekening implements Drawable {
     }
 
     public String toString() {
-        return this.getClass().getSimpleName() + ": naam: " + this.getNaam();
+        String result = this.getClass().getSimpleName() + ": naam: " + this.getNaam();
+        for (Vorm vorm: vormen){
+            result += vorm.toString() + "\n";
+        }
+        return result;
     }
 
     @Override
     public void teken(Pane root) {
         for (Vorm vorm: vormen) {
-            vorm.teken(root);
-
+            if (vorm.isZichtbaar()) {
+                vorm.teken(root);
+            }
         }
     }
 }

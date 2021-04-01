@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="FxFiguurApp" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="ui.FxFiguurApp" />
+  <configuration default="false" name="FxWoordRadenApp" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="ui.FxWoordRadenApp" />
     <module name="The_Pokeymoms_Project1" />
     <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Brech\Documents\School\javafx-sdk-11.0.2\lib&quot; --add-modules javafx.controls,javafx.graphics" />
     <extension name="coverage">

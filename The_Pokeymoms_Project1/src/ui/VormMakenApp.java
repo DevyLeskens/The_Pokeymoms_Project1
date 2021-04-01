@@ -28,8 +28,10 @@ public class VormMakenApp {
 
                 } else if (keuzeMenu.getValue().equals("Lijnstuk")) {
                     new LijnstukApp(root, tekening);
+
                 } else if (keuzeMenu.getValue().equals("Driehoek")) {
                     new DriehoekApp(root, tekening);
+
                 }
                 root.getChildren().remove(keuzeMenu);
             }

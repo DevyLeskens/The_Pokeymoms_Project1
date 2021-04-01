@@ -12,7 +12,7 @@ public class FxWoordRadenApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        TextField invoerNaam = new  TextField("Geef je naam");
+        TextField invoerNaam = new TextField("Geef je naam");
         GridPane root = new GridPane();
         Scene scene = new Scene(root,300,200);
 

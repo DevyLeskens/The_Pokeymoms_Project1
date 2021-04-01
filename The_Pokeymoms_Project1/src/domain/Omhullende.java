@@ -48,7 +48,7 @@ public class Omhullende {
         if (omhullende == null) {
             return false;
         }
-        return this.linkerbovenhoek == (((Omhullende) omhullende).getLinkerBovenhoek()) && this.hoogte == (((Omhullende) omhullende).getHoogte())
+         return this.linkerbovenhoek == (((Omhullende) omhullende).getLinkerBovenhoek()) && this.hoogte == (((Omhullende) omhullende).getHoogte())
                 && this.breedte == (((Omhullende) omhullende).getBreedte());
     }
 

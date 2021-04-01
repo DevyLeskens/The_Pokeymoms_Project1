@@ -13,11 +13,13 @@ public class TekenVenster {
     public TekenVenster(Pane root, Tekening tekening){
         if (tekening == null) throw new UiException();
         this.tekening = tekening;
-       // this.tekening(root);
+        this.teken(root);
     }
 
   public void teken(Pane root) {
-      // TODO vormen toevoegen aan tekening
+       if(root == null){
+          throw new UiException("er is geen root");
+       }
       tekening.teken(root);
   }
 }
